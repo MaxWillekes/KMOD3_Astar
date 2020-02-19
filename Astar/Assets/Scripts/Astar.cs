@@ -75,12 +75,12 @@ public class Astar
                 {
                     continue;
                 }
-                int MoveCost = (int)CurrentNode.GScore + GetManHattenDistance(CurrentNode, NeighborNode);
+                int MoveCost = (int)CurrentNode.GScore + (int)Vector2Int.Distance(CurrentNode.position, NeighborNode.position);
 
-                if (MoveCost < NeighborNode.GScore)
+                if (MoveCost < NeighborNode.FScore)
                 {
                     NeighborNode.GScore = MoveCost;
-                    NeighborNode.HScore = GetManHattenDistance(NeighborNode, nodeGrid[endPos.x, endPos.y]);
+                    NeighborNode.HScore = (int)Vector2Int.Distance(NeighborNode.position, nodeGrid[endPos.x, endPos.y].position);
                     NeighborNode.parent = CurrentNode;
 
                     if (!OpenList.Contains(NeighborNode))
@@ -146,14 +146,6 @@ public class Astar
         }
 
         return NeighboringNodes;
-    }
-
-    int GetManHattenDistance(Node a_nodeA, Node a_nodeB)
-    {
-        int ix = Mathf.Abs(a_nodeA.position.x - a_nodeB.position.x);
-        int iy = Mathf.Abs(a_nodeA.position.y - a_nodeB.position.y);
-
-        return ix + iy;
     }
 
     /// <summary>
